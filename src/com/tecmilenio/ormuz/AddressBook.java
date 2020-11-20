@@ -2,16 +2,14 @@ package com.tecmilenio.ormuz;
 
 import java.io.File;
 import java.io.IOException;
-import java.nio.file.FileSystems;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
+import java.nio.file.*;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Map;
 
 public class AddressBook {
 
-    private HashMap<String, Contact> contacts = new HashMap<>();
+    private HashMap<String,String> contacts = new HashMap<>();
 
     public void load() throws IOException {
         //Saves contacts of the file
@@ -28,10 +26,10 @@ public class AddressBook {
 
         lines = (ArrayList<String>) Files.readAllLines(path);
 
-        for (var line : lines) {
+        for (var line : lines){
             var contactInfo = line.split(",");
-            var contact = new Contact(contactInfo[1], contactInfo[0]);
-            contacts.put(contact.getPhone(), contact);
+
+            contacts.put(contactInfo[0].trim(),contactInfo[1].trim());
         }
     }
 
@@ -49,26 +47,30 @@ public class AddressBook {
             Files.write(path, saveContacts);
         }
 
-
-        public void list() {
-            //shows contacts od the address book
+    public void list() throws IOException {
+        load();
+        if(contacts.size() < 1){
+            System.out.println("Thre is no Contacts");
+        }
+        else{
             for(var contact : contacts.entrySet()){
-                System.out.println(String.format("Number: %s, Name: %s",
-                    contact.getKey(),contact.getValue().getName()));
+                System.out.println(String.format("Numero: %s, Nombre: %s",
+                        contact.getKey(),contact.getValue()));
             }
         }
 
+    }
+
         public void create (String name, String phone) throws IOException {
             //creates new contact
-            Contact contact = new Contact(name, phone);
-            contacts.put(phone,contact);
+            contacts.put(phone.trim(),name.trim());
             save();
             load();
         }
 
         public void delete (String phone) throws IOException {
             //deletes a contact
-            contacts.remove(phone);
+            var p = contacts.remove(phone);
             save();
             load();
         }
