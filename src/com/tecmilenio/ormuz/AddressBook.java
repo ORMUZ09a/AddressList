@@ -16,7 +16,7 @@ public class AddressBook {
     public void load() throws IOException {
         //Saves contacts of the file
         String separator = FileSystems.getDefault().getSeparator();
-        String fileName = String.format("src%scom%stecmilenio%sormuz%contacts.csv", separator, separator, separator, separator);
+        String fileName = String.format("src%scom%stecmilenio%sormuz%scontacts.csv",separator, separator, separator, separator);
         Path path = Paths.get(fileName);
 
         ArrayList<String> lines = new ArrayList<>();
@@ -38,7 +38,7 @@ public class AddressBook {
         public void save () throws IOException {
             //Saves chances of the file
             String separator = FileSystems.getDefault().getSeparator();
-            String fileName = String.format("src%scom%stecmilenio%sormuz%scontacts.csv", separator, separator, separator, separator);
+            String fileName = String.format("src%scom%stecmilenio%sormuz%scontacts.csv",separator, separator, separator, separator);
             Path path = Paths.get(fileName);
 
             ArrayList<String> saveContacts = new ArrayList<>();
